@@ -27,6 +27,7 @@ pipeline {
                 sh 'ls -la'
                 sh 'ls -la /var/jenkins_home/workspace/itss-fe-pl/jenkins'
                 sh 'ls -la /var/jenkins_home/workspace/itss-fe-pl/jenkins/scripts'
+                sh 'export PATH=/bin/bash:$PATH'
             }
         }
         stage('Test') {
