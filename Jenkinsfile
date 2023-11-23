@@ -11,11 +11,13 @@ pipeline {
                 sh 'npm install' 
             }
         }
-        stage('Print Working Directory') {
+        stage('Set Permissions') {
             steps {
-                sh 'pwd'
+                sh 'chmod +x ./jenkins/scripts/test.sh'
+                sh 'chmod +x ./jenkins/scripts/deliver.sh'
+                sh 'chmod +x ./jenkins/scripts/kill.sh'
             }
-        }  
+        }
         stage('Test') {
             steps {
                 sh './jenkins/scripts/test.sh'
