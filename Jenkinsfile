@@ -5,10 +5,20 @@ pipeline {
             args '-p 3000:3000'
         }
     }
+    environment {
+        SCRIPTS_PATH = "$WORKSPACE/jenkins/scripts"
+    }
     stages {
         stage('Build') { 
             steps {
                 sh 'npm install' 
+            }
+        }
+        stage('Set Permissions') {
+            steps {
+                sh "chmod +x ${SCRIPTS_PATH}/test.sh"
+                sh "chmod +x ${SCRIPTS_PATH}/deliver.sh"
+                sh "chmod +x ${SCRIPTS_PATH}/kill.sh"
             }
         }
         stage("Print WorkingDirectory") {
@@ -19,23 +29,16 @@ pipeline {
                 sh 'ls -la ./jenkins/scripts'
             }
         }
-        stage('Set Permissions') {
-            steps {
-                sh 'chmod +x ./jenkins/scripts/test.sh'
-                sh 'chmod +x ./jenkins/scripts/deliver.sh'
-                sh 'chmod +x ./jenkins/scripts/kill.sh'
-            }
-        }
         stage('Test') {
             steps {
-                sh './jenkins/scripts/test.sh'
+                sh "${SCRIPTS_PATH}/test.sh"
             }
-        }     
-        stage('Deliver') { 
+        }
+        stage('Deliver') {
             steps {
-                sh './jenkins/scripts/deliver.sh' 
-                input message: 'Finished using the web site? (Click "Proceed" to continue)' 
-                sh './jenkins/scripts/kill.sh' 
+                sh "${SCRIPTS_PATH}/deliver.sh"
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                sh "${SCRIPTS_PATH}/kill.sh"
             }
         }
     }
