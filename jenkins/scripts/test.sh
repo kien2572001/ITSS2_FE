@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 echo "Running tests..."
 # Thực hiện các bước kiểm thử của bạn ở đây
