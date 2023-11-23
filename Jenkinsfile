@@ -15,6 +15,8 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh 'ls -la'
+                sh 'ls -la ./jenkins'
+                sh 'ls -la ./jenkins/scripts'
             }
         }
         stage('Set Permissions') {
