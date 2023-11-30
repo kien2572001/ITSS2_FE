@@ -1,45 +1,26 @@
 pipeline {
     agent {
         docker {
-            image 'node:20.9.0-alpine3.18' 
+            image 'node:20.10.0-alpine3.18'
             args '-p 3000:3000'
         }
     }
-    environment {
-        SCRIPTS_PATH = "$WORKSPACE/jenkins/scripts"
-    }
     stages {
-        stage('Build') { 
+        stage('Build') {
             steps {
-                sh 'npm install' 
-            }
-        }
-        stage('Set Permissions') {
-            steps {
-                sh "chmod +x /var/jenkins_home/workspace/itss-fe-pl/jenkins/scripts/test.sh"
-                sh "chmod +x /var/jenkins_home/workspace/itss-fe-pl/jenkins/scripts/deliver.sh"
-                sh "chmod +x /var/jenkins_home/workspace/itss-fe-pl/jenkins/scripts/kill.sh"
-            }
-        }
-        stage("Print WorkingDirectory") {
-            steps {
-                sh 'pwd'
-                sh 'ls -la'
-                sh 'ls -la /var/jenkins_home/workspace/itss-fe-pl/jenkins'
-                sh 'ls -la /var/jenkins_home/workspace/itss-fe-pl/jenkins/scripts'
-                sh 'export PATH=/bin/bash:$PATH'
+                sh 'npm install'
             }
         }
         stage('Test') {
             steps {
-                sh "/var/jenkins_home/workspace/itss-fe-pl/jenkins/scripts/test.sh"
+                sh './jenkins/scripts/test.sh'
             }
         }
-        stage('Deliver') {
+        stage('Deliver') { 
             steps {
-                sh "/var/jenkins_home/workspace/itss-fe-pl/jenkins/scripts/deliver.sh"
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh "/var/jenkins_home/workspace/itss-fe-pl/jenkins/scripts/kill.sh"
+                sh './jenkins/scripts/deliver.sh' 
+                input message: 'Finished using the web site? (Click "Proceed" to continue)' 
+                sh './jenkins/scripts/kill.sh' 
             }
         }
     }
