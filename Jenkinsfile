@@ -14,8 +14,6 @@ pipeline {
                 script {
                     // Xóa Docker container cũ (nếu tồn tại)
                     sh 'docker rm -f itss2-fe || true'
-                    // Xóa thư mục node_modules
-                    sh 'rm -rf node_modules'
                 }
             }
         }
@@ -38,6 +36,7 @@ pipeline {
             steps {
                 sh './jenkins/scripts/deliver.sh' 
                 echo 'Deployed successfully!'
+                sh 'sudo docker cp ./build/* /var/www/html/itss2-fe/'
                 input message: 'Finished using the web site? (Click "Proceed" to continue)' 
                 sh './jenkins/scripts/kill.sh' 
             }
