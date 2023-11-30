@@ -22,6 +22,11 @@ pipeline {
                 sh 'npm install'
             }
         }
+        stage('Add Permission') {
+            steps {
+                sh 'chmod +x ./jenkins/scripts/*.sh'
+            }
+        }
         stage('Test') {
             steps {
                 sh './jenkins/scripts/test.sh'
