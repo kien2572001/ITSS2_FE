@@ -6,6 +6,13 @@ pipeline {
         }
     }
     stages {
+        stage('Clean') {
+            steps {
+                script {
+                    // Xóa thư mục node_modules
+                    sh 'rm -rf node_modules'
+                }
+            }
         stage('Build') {
             steps {
                 sh 'npm install'
