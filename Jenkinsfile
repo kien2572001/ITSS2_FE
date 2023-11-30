@@ -13,6 +13,7 @@ pipeline {
                     sh 'rm -rf node_modules'
                 }
             }
+        }
         stage('Build') {
             steps {
                 sh 'npm install'
