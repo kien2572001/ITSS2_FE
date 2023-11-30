@@ -4,9 +4,9 @@ pipeline {
             image 'node:20.10.0-alpine3.18'
             args '-p 3000:3000'
         }
-        environment {
-            HOME = '.'
-        }
+    }
+    environment {
+        HOME = '.'
     }
     stages {
         stage('Clean') {
