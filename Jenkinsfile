@@ -38,6 +38,8 @@ pipeline {
             steps {
                 sh './jenkins/scripts/deliver.sh' 
                 echo 'Deployed successfully!'
+                sh 'docker logs itss2-fe'
+                sh 'docker wait itss2-fe' // Chờ container hoàn tất
                 // input message: 'Finished using the web site? (Click "Proceed" to continue)' 
                 // sh './jenkins/scripts/kill.sh' 
             }
