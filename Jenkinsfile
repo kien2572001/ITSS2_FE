@@ -6,8 +6,8 @@ pipeline {
             steps {
                 script {
                     // Do not use 'sudo' within Docker containers
-                    sh 'node -v'
-                    sh 'npm install'
+                    sh 'sudo node -v'
+                    sh 'sudo npm install'
                 }
             }
         }
